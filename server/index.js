@@ -1,18 +1,18 @@
-import express from 'express';
-import cors from 'cors';
-import morgan from 'morgan';
-import mongoose from 'mongoose';
+import express from "express";
+import cors from "cors";
+import morgan from "morgan";
+import mongoose from "mongoose";
 
 // 123dev - password
 // mongodb+srv://Evgene:<password>@cluster0.uzhho.mongodb.net/?retryWrites=true&w=majority
 const app = express();
 
 app.use(morgan('dev'));
-app.use(express.json({limit: '30mb', extended: true}));
-app.use(express.urlencoded({limit: '30mb', extended: true}));
+app.use(express.json({limit: "30mb", extended: true}));
+app.use(express.urlencoded({limit: "30mb", extended: true}));
 app.use(cors());
 
-const MONGODB_URL = 'mongodb+srv://Evgene:123dev@cluster0.uzhho.mongodb.net/tour_db?retryWrites=true&w=majority'
+const MONGODB_URL = "mongodb+srv://Evgene:123dev@cluster0.uzhho.mongodb.net/tour_db?retryWrites=true&w=majority";
 
 const port = 5000;
 
