@@ -1,7 +1,22 @@
 # MERN-project
 
 ## Frontend
-- React
+- React: 18.0.0
+- Redux-toolkit
+- TypeScript
+- Moment
+- Axios
+- React-toastify
+- React-google-login
+- Material-ui
+- React-file-base64
 
 ## Backend
 - Node.js
+- Express
+- Jsonwebtoken
+- Mongoose
+- Morgan
+- Nodemon
+- Bcryptjs
+- Cors
