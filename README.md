@@ -4,6 +4,7 @@
 - React: 18.0.0
 - Redux-toolkit
 - TypeScript
+- Styled-components
 - Moment
 - Axios
 - React-toastify
