@@ -1,4 +1,6 @@
 import React, { FC, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as S from './styled';
 import {
   MDBBtn,
@@ -10,9 +12,9 @@ import {
   MDBSpinner,
   MDBValidation
 } from 'mdb-react-ui-kit';
-import { Link } from 'react-router-dom';
 import { ILoginModel } from 'models';
-import { useDispatch } from 'react-redux';
+import { login } from 'redux/reducers/authSlice';
+import { useAppDispatch } from 'hooks/redux';
 
 const initialState: ILoginModel = {
   email: '',
@@ -22,16 +24,19 @@ const initialState: ILoginModel = {
 const Login: FC = (): JSX.Element => {
   const [ formValue, setFormValue ] = useState<typeof initialState>(initialState);
   const { email, password } = formValue;
-  const dispath = useDispatch();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
+  const handleSubmit = (e: React.SyntheticEvent): void  => {
     e.preventDefault();
+    if(email && password) {
+      dispatch(login(formValue));
+    }
+    navigate('/');
   }
 
-  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onInputChange = (e: any): void  => {
     const { name, value } = e.target;
-    console.log(name, 'name');
-    console.log(value, 'value');
     setFormValue({...formValue, [name]: value});
   }
 
@@ -41,7 +46,7 @@ const Login: FC = (): JSX.Element => {
         <MDBIcon fas  icon='user-circle' className='fa-2x'/>
         <h5>Sign In</h5>
         <MDBCardBody>
-          <MDBValidation onSubmit={handleSubmit} noValidate className='row g-3'>
+          <MDBValidation onSubmit={handleSubmit}  className='row g-3'>
             <div className="col-md-12">
               <MDBInput 
                 label='email'
