@@ -18,14 +18,15 @@ const initialState: AuthState = {
 
 export const login = createAsyncThunk(
   'auth/login',
-  async(formValue: ILoginModel) => {
+  // @ts-ignore
+  async({formValue, navigate}, {rejectWithValue}) => {
     try {
       const response = await api.signIn(formValue);
       toast.success('Successfuly');
+      navigate('/')
       return response.data
-    } catch (error) {
-      console.log(error);
-      
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
     }
   }
 )
@@ -39,7 +40,7 @@ const authSlice = createSlice({
       state.isLoading = true;
     },
     [login.fulfilled.type]: (state, action) => {
-      state.isLoading = true;
+      state.isLoading = false;
       localStorage.setItem('profile', JSON.stringify({...action.payload}))
       state.user = action.payload;
     },
