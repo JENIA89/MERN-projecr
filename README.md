@@ -20,4 +20,3 @@
 - Morgan
 - Nodemon
 - Bcryptjs
-- Cors
