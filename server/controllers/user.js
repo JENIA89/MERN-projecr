@@ -54,8 +54,32 @@ export const signup = async (req, res) => {
       expiresIn: "1h",
     });
     res.status(201).json({ result, token });
+
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
     console.log(error);
   }
 };
+
+export const googleSignIn = async (req, res) => {
+  const { email, name, token, googleId } = req.body;
+
+  try {
+    const oldUser = await userModel.findOne({ email });
+
+    if(oldUser) {
+      const result = {_id: oldUser._id.toString(), email, name};
+      return res(200).json({result, token});
+    }
+
+    const result = await userModel.create({
+      email, name, googleId
+    });
+
+    res(200).json({result, token});
+
+  } catch (error) {
+    res.status(500).json({ message: "Something went wrong" });
+    console.log(error);
+  }
+}

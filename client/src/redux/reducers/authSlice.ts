@@ -23,7 +23,7 @@ export const login = createAsyncThunk(
     try {
       const response = await api.signIn(formValue);
       toast.success('Login Successfuly');
-      navigate('/')
+      navigate('/');
       return response.data
     } catch (error: any) {
       return rejectWithValue(error.response.data);
@@ -38,7 +38,22 @@ export const register = createAsyncThunk(
     try {
       const response = await api.signUp(formValue);
       toast.success('Register Successfuly');
-      navigate('/')
+      navigate('/');
+      return response.data
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+)
+
+export const googleSignIn = createAsyncThunk(
+  'auth/googleSignIn',
+  // @ts-ignore
+  async({result, navigate}, {rejectWithValue}) => {
+    try {
+      const response = await api.googleSignIn(result);
+      toast.success('Google Sign-In Successfuly');
+      navigate('/');
       return response.data
     } catch (error: any) {
       return rejectWithValue(error.response.data);
@@ -72,6 +87,18 @@ const authSlice = createSlice({
       state.user = action.payload;
     },
     [register.rejected.type]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload.message;
+    },
+    [googleSignIn.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [googleSignIn.fulfilled.type]: (state, action) => {
+      state.isLoading = false;
+      localStorage.setItem('profile', JSON.stringify({...action.payload}))
+      state.user = action.payload;
+    },
+    [googleSignIn.rejected.type]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload.message;
     },

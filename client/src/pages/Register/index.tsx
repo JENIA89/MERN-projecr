@@ -70,7 +70,7 @@ const Register: FC = (): JSX.Element => {
                 onChange={onInputChange}
                 required  
                 // @ts-ignore
-                invalid
+                invalid='true'
                 validation="Please provide First Name"
               />
             </div>
@@ -83,7 +83,7 @@ const Register: FC = (): JSX.Element => {
                 onChange={onInputChange}
                 required  
                 // @ts-ignore
-                invalid
+                invalid='true'
                 validation="Please provide Last Name"
               />
             </div>
@@ -96,7 +96,7 @@ const Register: FC = (): JSX.Element => {
                 onChange={onInputChange}
                 required  
                 // @ts-ignore
-                invalid
+                invalid='true'
                 validation="Please provide email"
               />
             </div>
@@ -109,7 +109,7 @@ const Register: FC = (): JSX.Element => {
                 onChange={onInputChange}
                 required
                 // @ts-ignore
-                invalid
+                invalid='true'
                 validation="Please provide password"
               />
             </div>
@@ -122,7 +122,7 @@ const Register: FC = (): JSX.Element => {
                 onChange={onInputChange}
                 required
                 // @ts-ignore
-                invalid
+                invalid='true'
                 validation="Please provide confirmPassword"
               />
             </div>

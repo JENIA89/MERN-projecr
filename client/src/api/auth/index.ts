@@ -3,3 +3,4 @@ import * as models from 'models';
 
 export const signIn = (model: models.ILoginModel) => api.post('/users/signin', model);
 export const signUp = (model: models.IRegisterModel) => api.post('/users/signup', model);
+export const googleSignIn = (model: any) => api.post('/users/googleSignIn', model);
