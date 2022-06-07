@@ -1,11 +1,11 @@
 import * as api  from '../../api/auth';
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ILoginModel } from 'models';
+import { ILoginModel, IUser } from 'models';
 import { toast } from 'react-toastify';
 
 
 interface AuthState {
-  user: null;
+  user: IUser | null;
   error: string;
   isLoading: boolean;
 }
@@ -64,7 +64,15 @@ export const googleSignIn = createAsyncThunk(
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    setUser: (state, action) => {
+      state.user = action.payload;
+    },
+    setLogout: (state) => {
+      localStorage.clear();
+      state.user = null;
+    },
+  },
   extraReducers: {
     [login.pending.type]: (state) => {
       state.isLoading = true;
@@ -103,6 +111,8 @@ const authSlice = createSlice({
       state.error = action.payload.message;
     },
   }
-})
+});
+
+export const { setUser, setLogout } = authSlice.actions;
 
 export default authSlice.reducer;

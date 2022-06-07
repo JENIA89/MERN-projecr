@@ -8,3 +8,13 @@ export interface IRegisterModel extends ILoginModel{
   lastName: string;
   confirmPassword: string;
 }
+
+export interface IUser {
+  token: string;
+  result: {
+    _id: string;
+    name: string;
+    email: string;
+    password: string;
+  }
+}
