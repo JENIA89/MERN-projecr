@@ -1,6 +1,5 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-
 import userModel from "../models/user.js";
 
 const secret = "test";
