@@ -1,7 +1,7 @@
 # MERN-project
 
 ## Frontend
-- React: 18.0.0
+- React: 18
 - Redux-toolkit
 - TypeScript
 - Styled-components
