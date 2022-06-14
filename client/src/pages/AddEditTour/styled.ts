@@ -7,4 +7,9 @@ export const TourContainer = styled.div`
 `;
 
 export const TourTitle = styled.h5`
-`
+`;
+
+export const FileBaseContainer = styled.div`
+  display: flex;
+  justify-content: start;
+`;
