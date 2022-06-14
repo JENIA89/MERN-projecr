@@ -31,7 +31,9 @@ const AddEditTour:FC = () => {
   const handleAddTag = (tag: any) => {
     setTourData({...tourData, tags: [...tourData.tags, tag]})
   }
-  const handleDeleteTag = (tag: any) => {}
+  const handleDeleteTag = (delTag: any) => {
+    setTourData({...tourData, tags: tourData.tags.filter(tag => tag !== delTag)})
+  }
   const handleClear = () => {}
   
   return (
