@@ -18,3 +18,10 @@ export interface IUser {
     password: string;
   }
 }
+
+export interface ITour {
+  title: string;
+  description: string;
+  tags: Array<string>;
+  imageFile: string;
+}

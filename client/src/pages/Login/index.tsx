@@ -31,10 +31,9 @@ const Login: FC = (): JSX.Element => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    error && toast.error(error)
+    error && toast.error(error);
   }, [error])
   
-
   const handleSubmit = (e: React.SyntheticEvent): void  => {
     e.preventDefault();
     if(email && password) {

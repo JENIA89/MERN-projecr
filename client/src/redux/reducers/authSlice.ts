@@ -1,6 +1,6 @@
 import * as api  from '../../api/auth';
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ILoginModel, IUser } from 'models';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { IUser } from 'models';
 import { toast } from 'react-toastify';
 
 
@@ -13,7 +13,7 @@ interface AuthState {
 const initialState: AuthState = {
   user: null,
   isLoading: false,
-  error: ''
+  error: '',
 }
 
 export const login = createAsyncThunk(

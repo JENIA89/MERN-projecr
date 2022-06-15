@@ -1,28 +1,43 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ChipInput from 'material-ui-chip-input';
 import { MDBBtn, MDBCard, MDBCardBody, MDBIcon, MDBValidation } from 'mdb-react-ui-kit';
 // @ts-ignore
 import FileBase64 from 'react-file-base64'
 import * as S from './styled';
+import { ITour } from 'models';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { toast } from 'react-toastify';
+import { createTour } from 'redux/reducers/tourSlice';
 
-interface IAddEditTour {
-  title: string,
-  description: string,
-  tags: Array<any>,
-  imageFile: any
-}
 
-const initialState: IAddEditTour = {
+const initialState: ITour = {
   title: '',
   description: '',
   tags: [],
   imageFile: ''
 }
 const AddEditTour:FC = () => {
-  const [tourData, setTourData] = useState(initialState);
+  const [tourData, setTourData] = useState<ITour>(initialState);
   const {title, description, tags} = tourData;
+  const { isLoading, error } = useAppSelector((state) => ({...state.tour}));
+  const { user } = useAppSelector((state) => ({...state.auth}));
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const handleSubmit = () => {}
+  useEffect(() => {
+    error && toast.error(error);
+  }, [error])
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    if(title && description && tags) {
+      const updateTourData = {...tourData, name: user?.result?.name};
+      // @ts-ignore
+      dispatch(createTour({updateTourData, navigate}));
+      handleClear();
+    }
+  }
   const onInputChange = (e: any) => {
     const { name, value } = e.target;
     setTourData({...tourData, [name]: value})
@@ -34,7 +49,14 @@ const AddEditTour:FC = () => {
   const handleDeleteTag = (delTag: any) => {
     setTourData({...tourData, tags: tourData.tags.filter(tag => tag !== delTag)})
   }
-  const handleClear = () => {}
+  const handleClear = () => {
+    setTourData({
+      title: '',
+      description: '',
+      tags: [],
+      imageFile: ''
+    })
+  }
   
   return (
     <S.TourContainer>
