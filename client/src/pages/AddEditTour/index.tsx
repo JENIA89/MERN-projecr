@@ -35,6 +35,8 @@ const AddEditTour:FC = () => {
       const updateTourData = {...tourData, name: user?.result?.name};
       // @ts-ignore
       dispatch(createTour({updateTourData, navigate}));
+      console.log(updateTourData, 'updateTourData');
+      
       handleClear();
     }
   }

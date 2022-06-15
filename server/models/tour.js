@@ -6,7 +6,7 @@ const tourSchema = mongoose.Schema({
   name: String,
   creator: String,
   tags: [String ],
-  imsgeFile: String,
+  imageFile: String,
   createdAt: {
     type: Date,
     default: new Date(),
