@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { ITour } from 'models';
 
 interface TourState {
-  tour: ITour | {},
+  tour: ITour | any,
   tours: Array<any>,
   userTour: Array<any>,
   error: string,
@@ -47,6 +47,19 @@ export const getTours = createAsyncThunk(
   }
 )
 
+export const getTour = createAsyncThunk(
+  'tour/getTour',
+  // @ts-ignore
+  async(id, {rejectWithValue}) => {
+    try {
+      const response = await api.getTour(id);
+      return response.data
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+)
+
 const tourSlice = createSlice({
   name: 'tour',
   initialState,
@@ -71,6 +84,17 @@ const tourSlice = createSlice({
       state.tours = action.payload;
     },
     [getTours.rejected.type]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload.message;
+    },
+    [getTour.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [getTour.fulfilled.type]: (state, action) => {
+      state.isLoading = false;
+      state.tour = action.payload;
+    },
+    [getTour.rejected.type]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload.message;
     },

@@ -16,9 +16,19 @@ export const createTour = async (req, res) => {
   }
 };
 
-export const getTour = async (req, res) => {
+export const getTours = async (req, res) => {
   try {
-    const tour = await TourModel.find();
+    const tours = await TourModel.find();
+    res.status(200).json(tours);
+  } catch (error) {
+    res.status(404).json({ message: "Something went wrong" });
+  }
+}
+
+export const getTour = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const tour = await TourModel.findById(id);
     res.status(200).json(tour);
   } catch (error) {
     res.status(404).json({ message: "Something went wrong" });

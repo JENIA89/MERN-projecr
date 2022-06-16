@@ -4,6 +4,7 @@ import AddEditTour from 'pages/AddEditTour'
 import Home from '../pages/Home'
 import Login from '../pages/Login'
 import Register from '../pages/Register'
+import Tour from 'pages/Tour'
 
 
 const AppRouter: FC = (): JSX.Element => {
@@ -14,6 +15,7 @@ const AppRouter: FC = (): JSX.Element => {
       <Route path='/register' element={<Register/>}/>
       <Route path='/addTour' element={<AddEditTour/>}/>
       <Route path='/addTour/:id' element={<AddEditTour/>}/>
+      <Route path='/tour/:id' element={<Tour/>}/>
     </Routes>
   )
 }
