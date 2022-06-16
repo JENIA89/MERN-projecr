@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import ChipInput from 'material-ui-chip-input';
 import { MDBBtn, MDBCard, MDBCardBody, MDBIcon, MDBValidation } from 'mdb-react-ui-kit';
 // @ts-ignore
-import FileBase64 from 'react-file-base64'
+import FileBase from 'react-file-base64';
 import * as S from './styled';
 import { ITour } from 'models';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
@@ -35,8 +35,6 @@ const AddEditTour:FC = () => {
       const updateTourData = {...tourData, name: user?.result?.name};
       // @ts-ignore
       dispatch(createTour({updateTourData, navigate}));
-      console.log(updateTourData, 'updateTourData');
-      
       handleClear();
     }
   }
@@ -107,10 +105,10 @@ const AddEditTour:FC = () => {
               />
             </div>
             <S.FileBaseContainer>
-              <FileBase64
+              <FileBase
                 type='file'
                 multiple={false}
-                onDone={({baze64}: any) => setTourData({...tourData, imageFile: baze64})}
+                onDone={({base64}: any) => setTourData({...tourData, imageFile: base64})}
                 />
             </S.FileBaseContainer>
             <div className="col-12">

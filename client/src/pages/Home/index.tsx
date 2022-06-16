@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import * as S from './styled';
 import { getTours } from 'redux/reducers/tourSlice';
 import { MDBCol, MDBContainer, MDBRow, MDBTypography } from 'mdb-react-ui-kit';
+import CardTour from 'components/CardTour/CardTour';
 
 const Home: FC = (): JSX.Element => {
   const { tours, isLoading}  = useAppSelector(state => ({...state.tour}))
@@ -29,8 +30,8 @@ const Home: FC = (): JSX.Element => {
         <MDBCol>
           <MDBContainer>
             <MDBRow className='row-cols-1 row-cols-md-3 g-2'>
-              {tours && tours.map((tour, i) => (
-                <h2>Tour Card</h2>
+              {tours && tours.map((tour) => (
+                <CardTour key={tour._id} {...tour}/>
               ))}
             </MDBRow>
           </MDBContainer>
