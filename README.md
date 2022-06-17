@@ -9,7 +9,6 @@
 - Axios
 - React-toastify
 - React-google-login
-- Material-ui
 - React-file-base64
 
 ## Backend
