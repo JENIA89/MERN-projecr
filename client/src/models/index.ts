@@ -24,4 +24,5 @@ export interface ITour {
   description: string;
   tags: Array<string>;
   imageFile: string;
+  _id?: string;
 }

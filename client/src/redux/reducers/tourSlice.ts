@@ -6,7 +6,7 @@ import { ITour } from 'models';
 interface TourState {
   tour: ITour | any,
   tours: Array<any>,
-  userTour: Array<any>,
+  userTours: Array<ITour>,
   error: string,
   isLoading: boolean,
 }
@@ -14,7 +14,7 @@ interface TourState {
 const initialState: TourState = {
   tour: {},
   tours: [],
-  userTour: [],
+  userTours: [],
   error: '',
   isLoading: false,
 }
@@ -27,6 +27,19 @@ export const createTour = createAsyncThunk(
       const response = await api.createTour(updateTourData);
       toast.success('Tour Added Successfuly');
       navigate('/');
+      return response.data
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+)
+
+export const getTour = createAsyncThunk(
+  'tour/getTour',
+  // @ts-ignore
+  async(id, {rejectWithValue}) => {
+    try {
+      const response = await api.getTour(id);
       return response.data
     } catch (error: any) {
       return rejectWithValue(error.response.data);
@@ -47,12 +60,12 @@ export const getTours = createAsyncThunk(
   }
 )
 
-export const getTour = createAsyncThunk(
-  'tour/getTour',
+export const getToursByUser = createAsyncThunk(
+  'tour/getToursByUser',
   // @ts-ignore
-  async(id, {rejectWithValue}) => {
+  async(userId, {rejectWithValue}) => {
     try {
-      const response = await api.getTour(id);
+      const response = await api.getToursByUser(userId);
       return response.data
     } catch (error: any) {
       return rejectWithValue(error.response.data);
@@ -95,6 +108,17 @@ const tourSlice = createSlice({
       state.tour = action.payload;
     },
     [getTour.rejected.type]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload.message;
+    },
+    [getToursByUser.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [getToursByUser.fulfilled.type]: (state, action) => {
+      state.isLoading = false;
+      state.userTours = action.payload;
+    },
+    [getToursByUser.rejected.type]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload.message;
     },

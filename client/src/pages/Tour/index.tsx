@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from 'hooks/redux'
-import { MDBCard, MDBCardBody, MDBCardImage, MDBContainer } from 'mdb-react-ui-kit';
+import { MDBCard, MDBCardBody, MDBCardImage, MDBCardText, MDBContainer, MDBIcon } from 'mdb-react-ui-kit';
+import moment from 'moment';
 import React, { FC, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import { getTour } from 'redux/reducers/tourSlice';
@@ -7,7 +8,7 @@ import { getTour } from 'redux/reducers/tourSlice';
 const Tour: FC = () => {
   const dispatch = useAppDispatch();
   const { tour } = useAppSelector(state => ({...state.tour}));
-  const {id} = useParams();
+  const { id } = useParams();
 
   useEffect(() => {
     // @ts-ignore
@@ -30,8 +31,25 @@ const Tour: FC = () => {
             <p className="text-start tourName">Create By: {tour?.name}</p>
           </span>
           <div style={{float: 'left'}}> 
-
+            <span className="text-start">
+              {tour.tags && tour.tags.map((tag: string)=>`#${tag}`)}
+            </span>
           </div>
+          <br/>
+          <MDBCardText className='text-start mt-2'>
+            <MDBIcon
+              style={{float: 'left', margin: '5px'}}
+              far
+              icon='calendar-alt'
+              size='lg'
+              />
+            <small className="text-muted">
+              {moment(tour?.createdAt).fromNow()}
+            </small>
+          </MDBCardText>
+          <MDBCardText className='lead mb-0 text-start'>
+            {tour?.description}
+          </MDBCardText>
         </MDBCardBody>
       </MDBCard>
     </MDBContainer>
