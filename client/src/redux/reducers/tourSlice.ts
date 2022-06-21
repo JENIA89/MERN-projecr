@@ -1,0 +1,128 @@
+import * as api  from '../../api/tour';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from 'react-toastify';
+import { ITour } from 'models';
+
+interface TourState {
+  tour: ITour | any,
+  tours: Array<any>,
+  userTours: Array<ITour>,
+  error: string,
+  isLoading: boolean,
+}
+
+const initialState: TourState = {
+  tour: {},
+  tours: [],
+  userTours: [],
+  error: '',
+  isLoading: false,
+}
+
+export const createTour = createAsyncThunk(
+  'tour/createTour',
+  // @ts-ignore
+  async({updateTourData, navigate}, {rejectWithValue}) => {
+    try {
+      const response = await api.createTour(updateTourData);
+      toast.success('Tour Added Successfuly');
+      navigate('/');
+      return response.data
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+)
+
+export const getTour = createAsyncThunk(
+  'tour/getTour',
+  // @ts-ignore
+  async(id, {rejectWithValue}) => {
+    try {
+      const response = await api.getTour(id);
+      return response.data
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+)
+
+export const getTours = createAsyncThunk(
+  'tour/getTours',
+  // @ts-ignore
+  async(_, {rejectWithValue}) => {
+    try {
+      const response = await api.getTours();
+      return response.data
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+)
+
+export const getToursByUser = createAsyncThunk(
+  'tour/getToursByUser',
+  // @ts-ignore
+  async(userId, {rejectWithValue}) => {
+    try {
+      const response = await api.getToursByUser(userId);
+      return response.data
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+)
+
+const tourSlice = createSlice({
+  name: 'tour',
+  initialState,
+  reducers: {},
+  extraReducers: {
+    [createTour.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [createTour.fulfilled.type]: (state, action) => {
+      state.isLoading = false;
+      state.tours = [action.payload];
+    },
+    [createTour.rejected.type]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload.message;
+    },
+    [getTours.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [getTours.fulfilled.type]: (state, action) => {
+      state.isLoading = false;
+      state.tours = action.payload;
+    },
+    [getTours.rejected.type]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload.message;
+    },
+    [getTour.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [getTour.fulfilled.type]: (state, action) => {
+      state.isLoading = false;
+      state.tour = action.payload;
+    },
+    [getTour.rejected.type]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload.message;
+    },
+    [getToursByUser.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [getToursByUser.fulfilled.type]: (state, action) => {
+      state.isLoading = false;
+      state.userTours = action.payload;
+    },
+    [getToursByUser.rejected.type]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload.message;
+    },
+  }
+})
+
+export default tourSlice.reducer;
