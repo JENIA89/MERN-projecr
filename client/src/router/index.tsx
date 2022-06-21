@@ -1,12 +1,12 @@
 import { FC } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import AddEditTour from 'pages/AddEditTour'
-import Home from '../pages/Home'
-import Login from '../pages/Login'
-import Register from '../pages/Register'
+import Home from 'pages/Home'
+import Login from 'pages/Login'
+import Register from 'pages/Register'
 import Tour from 'pages/Tour'
 import Dashboard from 'pages/Dashboard'
-import PrivateRoute from '../components/PrivateRoute'
+import PrivateRoute from 'components/PrivateRoute'
 
 
 const AppRouter: FC = (): JSX.Element => {
