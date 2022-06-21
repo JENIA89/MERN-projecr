@@ -5,6 +5,7 @@ import * as S from './styled';
 import { MDBBtn, MDBCard, MDBCardBody, MDBCardGroup, MDBCardImage, MDBCardText, MDBCardTitle, MDBCol, MDBIcon, MDBRow } from 'mdb-react-ui-kit';
 import { excerpt } from 'utils';
 import { Link } from 'react-router-dom';
+import Spinner from 'components/Spinner';
 
 const Dashboard = () => {
   const { user } = useAppSelector(state => ({...state.auth}));
@@ -18,6 +19,10 @@ const Dashboard = () => {
       dispatch(getToursByUser(userId))
     }
   }, [userId])
+
+  if(isLoading) {
+    return <Spinner />
+  }
   
   return (
     <S.DashboardContainer>

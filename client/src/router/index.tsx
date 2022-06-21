@@ -5,7 +5,8 @@ import Home from '../pages/Home'
 import Login from '../pages/Login'
 import Register from '../pages/Register'
 import Tour from 'pages/Tour'
-import Dashboard from 'pages/Dashboard/Dashboard'
+import Dashboard from 'pages/Dashboard'
+import PrivateRoute from '../components/PrivateRoute'
 
 
 const AppRouter: FC = (): JSX.Element => {
@@ -14,10 +15,25 @@ const AppRouter: FC = (): JSX.Element => {
       <Route path='/' element={<Home/>}/>
       <Route path='/login' element={<Login/>}/>
       <Route path='/register' element={<Register/>}/>
-      <Route path='/dashboard' element={<Dashboard/>}/>
+      <Route path='/dashboard'
+       element={
+        <PrivateRoute>
+          <Dashboard/>
+        </PrivateRoute>
+      }/>
       <Route path='/addTour' element={<AddEditTour/>}/>
-      <Route path='/editTour/:id' element={<AddEditTour/>}/>
-      <Route path='/tour/:id' element={<Tour/>}/>
+      <Route path='/editTour/:id'
+        element={
+          <PrivateRoute>
+            <AddEditTour/>
+          </PrivateRoute>
+        }/>
+      <Route path='/tour/:id'
+        element={
+          <PrivateRoute>
+            <Tour/>
+          </PrivateRoute>
+        }/>
     </Routes>
   )
 }

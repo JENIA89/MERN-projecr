@@ -3,7 +3,8 @@ import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import * as S from './styled';
 import { getTours } from 'redux/reducers/tourSlice';
 import { MDBCol, MDBContainer, MDBRow, MDBTypography } from 'mdb-react-ui-kit';
-import CardTour from 'components/CardTour/CardTour';
+import CardTour from 'components/CardTour';
+import Spinner from 'components/Spinner';
 
 const Home: FC = (): JSX.Element => {
   const { tours, isLoading}  = useAppSelector(state => ({...state.tour}))
@@ -14,7 +15,7 @@ const Home: FC = (): JSX.Element => {
   }, []);
 
   if(isLoading) {
-    return <h2>Loadig...</h2>
+    return <Spinner />
   }
   
   return (
