@@ -39,10 +39,54 @@ export const getTour = async (req, res) => {
 export const getToursById = async (req, res) => {
   const { id } = req.params;
 
-  if(!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ message: "User don't exist" })
+  try {
+    if(!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ message: "User don't exist" })
+    }
+  
+    const userTours = await TourModel.find({creator: id});
+    res.status(200).json(userTours);
+  } catch (error) {
+    res.status(404).json({ message: "Something went wrong" });
   }
+}
 
-  const userTours = await TourModel.find({creator: id});
-  res.status(200).json(userTours);
+export const deleteTour = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    if(!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ message: `No tour exist with id: ${id}` })
+    }
+  
+    await TourModel.findByIdAndRemove(id);
+    res.status(200).json({ message: "Tour deleted successfully" });
+  } catch (error) {
+    res.status(404).json({ message: "Something went wrong" });
+  }
+}
+
+export const updateTour = async (req, res) => {
+  const { id } = req.params;
+  const { title, description, creator, imageFile, tags } = req.body;
+
+  try {
+    if(!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ message: `No tour exist with id: ${id}` })
+    }
+
+    const updateTour = new TourModel({
+      title,
+      description,
+      creator,
+      imageFile,
+      tags,
+      _id: id
+    });
+  
+    await TourModel.findByIdAndUpdate(id, updateTour, {new: true});
+    res.status(200).json(updateTour);
+  } catch (error) {
+    res.status(404).json({ message: "Something went wrong" });
+  }
 }

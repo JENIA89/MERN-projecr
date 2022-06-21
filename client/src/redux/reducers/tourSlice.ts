@@ -73,6 +73,20 @@ export const getToursByUser = createAsyncThunk(
   }
 )
 
+export const deleteTour = createAsyncThunk(
+  'tour/deleteTour',
+  // @ts-ignore
+  async(userId, {rejectWithValue}) => {
+    try {
+      const response = await api.deleteTour(userId);
+      toast.success('Tour Deleted Successfuly');
+      return response.data
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+)
+
 const tourSlice = createSlice({
   name: 'tour',
   initialState,
@@ -119,6 +133,19 @@ const tourSlice = createSlice({
       state.userTours = action.payload;
     },
     [getToursByUser.rejected.type]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload.message;
+    },
+    [deleteTour.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [deleteTour.fulfilled.type]: (state, action) => {
+      state.isLoading = false;
+      const { arg } = action.meta
+      state.userTours = state.userTours.filter(item => item._id !== arg);
+      state.tours = state.tours.filter(item => item._id !== arg);
+    },
+    [deleteTour.rejected.type]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload.message;
     },

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from 'hooks/redux'
-import { getToursByUser } from 'redux/reducers/tourSlice';
+import { deleteTour, getToursByUser } from 'redux/reducers/tourSlice';
 import * as S from './styled';
 import { MDBBtn, MDBCard, MDBCardBody, MDBCardGroup, MDBCardImage, MDBCardText, MDBCardTitle, MDBCol, MDBIcon, MDBRow } from 'mdb-react-ui-kit';
 import { excerpt } from 'utils';
@@ -19,6 +19,13 @@ const Dashboard = () => {
       dispatch(getToursByUser(userId))
     }
   }, [userId])
+
+  const handleDelete = (id: any): void => {
+    if(window.confirm('Are you sure you want to delete this tour?')) {
+      // @ts-ignore
+      dispatch(deleteTour(id))
+    }
+  }
 
   if(isLoading) {
     return <Spinner />
@@ -57,6 +64,7 @@ const Dashboard = () => {
                         icon='trash'
                         size='lg'
                         style={{color: '#dd4b39'}}
+                        onClick={() => handleDelete(userTour._id)}
                       />
                     </MDBBtn>
                     <Link to={`/editTour/${userTour._id}`}>
