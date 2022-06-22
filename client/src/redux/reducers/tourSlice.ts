@@ -1,7 +1,8 @@
+import { ITour } from '../../models';
 import * as api  from '../../api/tour';
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from 'react-toastify';
-import { ITour } from 'models';
+
 
 interface TourState {
   tour: ITour | any,
@@ -87,6 +88,23 @@ export const deleteTour = createAsyncThunk(
   }
 )
 
+export const updateTour = createAsyncThunk(
+  "tour/updateTour",
+  // @ts-ignore
+  async ({id, updateTourData, navigate}, { rejectWithValue }) => {
+    try {
+      console.log(id, 'userId');
+      console.log(updateTourData, 'data');
+      const response = await api.updateTour(id, updateTourData);
+      toast.success("Tour Updated Successfully");
+      // navigate("/");
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const tourSlice = createSlice({
   name: 'tour',
   initialState,
@@ -146,6 +164,26 @@ const tourSlice = createSlice({
       state.tours = state.tours.filter(item => item._id !== arg);
     },
     [deleteTour.rejected.type]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload.message;
+    },
+    [updateTour.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [updateTour.fulfilled.type]: (state, action) => {
+      state.isLoading = false;
+      const { id } = action.meta.arg;
+      console.log(id, 'arg id')
+      if (id) {
+        state.userTours = state.userTours.map((item) =>
+          item._id === id ? action.payload : item
+        );
+        state.tours = state.tours.map((item) =>
+          item._id === id ? action.payload : item
+        );
+      }
+    },
+    [updateTour.rejected.type]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload.message;
     },

@@ -1,14 +1,14 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ChipInput from 'material-ui-chip-input';
 import { MDBBtn, MDBCard, MDBCardBody, MDBIcon, MDBValidation } from 'mdb-react-ui-kit';
 // @ts-ignore
 import FileBase from 'react-file-base64';
 import * as S from './styled';
-import { ITour } from 'models';
-import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { ITour } from '../../models';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { toast } from 'react-toastify';
-import { createTour } from 'redux/reducers/tourSlice';
+import { createTour, updateTour } from '../../redux/reducers/tourSlice';
 
 
 const initialState: ITour = {
@@ -18,12 +18,20 @@ const initialState: ITour = {
   imageFile: ''
 }
 const AddEditTour:FC = () => {
-  const [tourData, setTourData] = useState<ITour>(initialState);
-  const {title, description, tags} = tourData;
-  const { isLoading, error } = useAppSelector((state) => ({...state.tour}));
+  const [ tourData, setTourData ] = useState(initialState);
+  const { title, description, tags } = tourData;
+  const { error, userTours } = useAppSelector((state) => ({...state.tour}));
   const { user } = useAppSelector((state) => ({...state.auth}));
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  useEffect(() => {
+    if(id) {
+      const editTour = userTours.find(tour => tour._id === id);
+      setTourData({...editTour} as ITour)
+    }
+  }, [id])
 
   useEffect(() => {
     error && toast.error(error);
@@ -33,8 +41,15 @@ const AddEditTour:FC = () => {
     e.preventDefault();
     if(title && description && tags) {
       const updateTourData = {...tourData, name: user?.result?.name};
-      // @ts-ignore
-      dispatch(createTour({updateTourData, navigate}));
+      if(!id) {
+        // @ts-ignore       
+        dispatch(createTour({updateTourData, navigate}));
+      } else {
+        console.log(id, 'userId');
+        console.log(updateTourData, 'data updateTour');
+        // @ts-ignore
+        dispatch(updateTour({id, updateTourData, navigate}));
+      }
       handleClear();
     }
   }
@@ -61,14 +76,14 @@ const AddEditTour:FC = () => {
   return (
     <S.TourContainer>
       <MDBCard alignment='center'>
-        <S.TourTitle>Add Tour</S.TourTitle>
+        <S.TourTitle>{ id ? 'Update Tour' : 'Add Tour' }</S.TourTitle>
         <MDBCardBody>
           <MDBValidation onSubmit={handleSubmit} className='row g-3' noValidate>
             <div className="col-md-12">
               <input
                 placeholder='title'
                 type='text'
-                value={title}
+                value={title || ''}
                 name='title'
                 onChange={onInputChange}
                 className='form-control'
@@ -82,6 +97,8 @@ const AddEditTour:FC = () => {
               <textarea
                 placeholder='description'
                 style={{height: '100px'}}
+                // @ts-ignore
+                type='text'
                 value={description}
                 name='description'
                 onChange={onInputChange}
@@ -112,7 +129,7 @@ const AddEditTour:FC = () => {
                 />
             </S.FileBaseContainer>
             <div className="col-12">
-              <MDBBtn style={{width: '100%'}}>Submit</MDBBtn>
+              <MDBBtn style={{width: '100%'}}>{ id ? 'Update' : 'Submit' }</MDBBtn>
               <MDBBtn
                 style={{width: '100%'}}
                 className='mt-2'

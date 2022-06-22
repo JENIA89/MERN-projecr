@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from 'hooks/redux'
-import { deleteTour, getToursByUser } from 'redux/reducers/tourSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux'
+import { deleteTour, getToursByUser } from '../../redux/reducers/tourSlice';
 import * as S from './styled';
 import { MDBBtn, MDBCard, MDBCardBody, MDBCardGroup, MDBCardImage, MDBCardText, MDBCardTitle, MDBCol, MDBIcon, MDBRow } from 'mdb-react-ui-kit';
-import { excerpt } from 'utils';
+import { excerpt } from '../../utils';
 import { Link } from 'react-router-dom';
-import Spinner from 'components/Spinner';
+import Spinner from '../../components/Spinner';
 
 const Dashboard = () => {
   const { user } = useAppSelector(state => ({...state.auth}));
   const { userTours, isLoading } = useAppSelector(state => ({...state.tour}));
   const dispatch = useAppDispatch();
   const userId = user?.result?._id;
-
+  
   useEffect(() => {
     if(userId) {
       // @ts-ignore

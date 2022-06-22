@@ -23,6 +23,6 @@ export interface ITour {
   title: string;
   description: string;
   tags: Array<string>;
-  imageFile: string;
+  imageFile?: string;
   _id?: string;
 }
