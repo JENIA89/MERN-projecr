@@ -97,7 +97,7 @@ export const updateTour = createAsyncThunk(
       console.log(updateTourData, 'data');
       const response = await api.updateTour(id, updateTourData);
       toast.success("Tour Updated Successfully");
-      // navigate("/");
+      navigate("/");
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);

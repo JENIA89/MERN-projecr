@@ -7,6 +7,7 @@ import Register from 'pages/Register'
 import Tour from 'pages/Tour'
 import Dashboard from 'pages/Dashboard'
 import PrivateRoute from 'components/PrivateRoute'
+import NotFound from 'pages/NotFound'
 
 
 const AppRouter: FC = (): JSX.Element => {
@@ -34,6 +35,7 @@ const AppRouter: FC = (): JSX.Element => {
             <Tour/>
           </PrivateRoute>
         }/>
+      <Route path='*' element={<NotFound/>}/>  
     </Routes>
   )
 }

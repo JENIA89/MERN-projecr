@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ChipInput from 'material-ui-chip-input';
-import { MDBBtn, MDBCard, MDBCardBody, MDBIcon, MDBValidation } from 'mdb-react-ui-kit';
+import { MDBBtn, MDBCard, MDBCardBody, MDBValidation } from 'mdb-react-ui-kit';
 // @ts-ignore
 import FileBase from 'react-file-base64';
 import * as S from './styled';
@@ -99,6 +99,7 @@ const AddEditTour:FC = () => {
                 style={{height: '100px'}}
                 // @ts-ignore
                 type='text'
+                textarea={description.toString()}
                 value={description}
                 name='description'
                 onChange={onInputChange}

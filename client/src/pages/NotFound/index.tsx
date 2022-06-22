@@ -1,0 +1,11 @@
+import React, { FC } from 'react'
+
+const NotFound: FC = () => {
+  return (
+    <div>
+      <img src='/images/404.jpg' alt='Not Found'/>
+    </div>
+  )
+}
+
+export default NotFound
