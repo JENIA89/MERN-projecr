@@ -8,5 +8,9 @@ export const HeaderLink = styled.p`
 `;
 
 export const UserName = styled.h5`
-  margin: 17px 30px 0 0;
+  margin: 15px 30px 0 0;
+`;
+
+export const SearchIcon = styled.div`
+  margin: 5px 0 0 5px;
 `;

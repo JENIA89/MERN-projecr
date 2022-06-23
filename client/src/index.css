@@ -10,13 +10,6 @@ code {
     monospace;
 }
 
-.header-text {
-  color: #606080;
-  font-weight: 500;
-  margin-top: 17px;
-  font-size: 17px;
-}
-
 .top-left {
   position: absolute;
   top: 8px;

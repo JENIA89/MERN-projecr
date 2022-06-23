@@ -93,11 +93,22 @@ export const updateTour = createAsyncThunk(
   // @ts-ignore
   async ({id, updateTourData, navigate}, { rejectWithValue }) => {
     try {
-      console.log(id, 'userId');
-      console.log(updateTourData, 'data');
       const response = await api.updateTour(id, updateTourData);
       toast.success("Tour Updated Successfully");
       navigate("/");
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const searchTours = createAsyncThunk(
+  "tour/searchTours",
+  // @ts-ignore
+  async (querySearch, { rejectWithValue }) => {
+    try {
+      const response = await api.getToursBySearch(querySearch);
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
@@ -184,6 +195,17 @@ const tourSlice = createSlice({
       }
     },
     [updateTour.rejected.type]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload.message;
+    },
+    [searchTours.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [searchTours.fulfilled.type]: (state, action) => {
+      state.isLoading = false;
+      state.tours = action.payload;
+    },
+    [searchTours.rejected.type]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload.message;
     },
