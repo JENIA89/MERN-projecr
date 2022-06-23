@@ -12,9 +12,9 @@ import {
   MDBSpinner,
   MDBValidation
 } from 'mdb-react-ui-kit';
-import { ILoginModel } from 'models';
-import { login, googleSignIn } from 'redux/reducers/authSlice';
-import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { ILoginModel } from '../../models';
+import { login, googleSignIn } from '../../redux/reducers/authSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { toast } from 'react-toastify';
 import { GoogleLogin } from 'react-google-login';
 

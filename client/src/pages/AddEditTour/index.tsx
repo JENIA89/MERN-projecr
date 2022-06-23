@@ -19,6 +19,7 @@ const initialState: ITour = {
 }
 const AddEditTour:FC = () => {
   const [ tourData, setTourData ] = useState(initialState);
+  const [ tagErrorMsg, setTagErrorMsg ] = useState<string>('');
   const { title, description, tags } = tourData;
   const { error, userTours } = useAppSelector((state) => ({...state.tour}));
   const { user } = useAppSelector((state) => ({...state.auth}));
@@ -39,14 +40,15 @@ const AddEditTour:FC = () => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    if(title && description && tags) {
+    if(!tags.length) {
+      setTagErrorMsg('Please provide some tags')
+    }
+    if(title && description && tags.length) {
       const updateTourData = {...tourData, name: user?.result?.name};
       if(!id) {
         // @ts-ignore       
         dispatch(createTour({updateTourData, navigate}));
       } else {
-        console.log(id, 'userId');
-        console.log(updateTourData, 'data updateTour');
         // @ts-ignore
         dispatch(updateTour({id, updateTourData, navigate}));
       }
@@ -59,6 +61,7 @@ const AddEditTour:FC = () => {
   }
 
   const handleAddTag = (tag: any) => {
+    setTagErrorMsg('');
     setTourData({...tourData, tags: [...tourData.tags, tag]})
   }
   const handleDeleteTag = (delTag: any) => {
@@ -121,6 +124,7 @@ const AddEditTour:FC = () => {
                 onAdd={(tag) => handleAddTag(tag)}
                 onDelete={(tag) => handleDeleteTag(tag)}
               />
+              {tagErrorMsg && <S.TagError>{tagErrorMsg}</S.TagError>}
             </div>
             <S.FileBaseContainer>
               <FileBase
