@@ -24,7 +24,7 @@ export const getTours = async (req, res) => {
   } catch (error) {
     res.status(404).json({ message: "Something went wrong" });
   }
-}
+};
 
 export const getTour = async (req, res) => {
   const { id } = req.params;
@@ -34,7 +34,7 @@ export const getTour = async (req, res) => {
   } catch (error) {
     res.status(404).json({ message: "Something went wrong" });
   }
-}
+};
 
 export const getToursById = async (req, res) => {
   const { id } = req.params;
@@ -49,7 +49,7 @@ export const getToursById = async (req, res) => {
   } catch (error) {
     res.status(404).json({ message: "Something went wrong" });
   }
-}
+};
 
 export const deleteTour = async (req, res) => {
   const { id } = req.params;
@@ -64,7 +64,7 @@ export const deleteTour = async (req, res) => {
   } catch (error) {
     res.status(404).json({ message: "Something went wrong" });
   }
-}
+};
 
 export const updateTour = async (req, res) => {
   const { id } = req.params;
@@ -95,6 +95,17 @@ export const getToursBySearch = async (req, res) => {
   try {
     const title = new RegExp(searchQuery, 'i');
     const tours = await TourModel.find({title});
+    res.json(tours)
+  } catch (error) {
+    res.status(404).json({ message: "Something went wrong" });
+  }
+};
+
+export const getToursByTag = async (req, res) => {
+  const { tag} = req.params;
+
+  try {
+    const tours = await TourModel.find({tag: {$in: tag}})
     res.json(tours)
   } catch (error) {
     res.status(404).json({ message: "Something went wrong" });

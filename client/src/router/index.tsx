@@ -8,6 +8,7 @@ import Tour from 'pages/Tour'
 import Dashboard from 'pages/Dashboard'
 import PrivateRoute from 'components/PrivateRoute'
 import NotFound from 'pages/NotFound'
+import TagTours from 'pages/TagTours'
 
 
 const AppRouter: FC = (): JSX.Element => {
@@ -15,6 +16,7 @@ const AppRouter: FC = (): JSX.Element => {
     <Routes>
       <Route path='/' element={<Home/>}/>
       <Route path='/tours/search' element={<Home/>}/>
+      <Route path='/tours/tag/:tag' element={<TagTours/>}/>
       <Route path='/login' element={<Login/>}/>
       <Route path='/register' element={<Register/>}/>
       <Route path='/dashboard'

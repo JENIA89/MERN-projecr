@@ -8,6 +8,7 @@ interface TourState {
   tour: ITour | any,
   tours: Array<any>,
   userTours: Array<ITour>,
+  tagTours: Array<any>,
   error: string,
   isLoading: boolean,
 }
@@ -16,6 +17,7 @@ const initialState: TourState = {
   tour: {},
   tours: [],
   userTours: [],
+  tagTours: [],
   error: '',
   isLoading: false,
 }
@@ -116,6 +118,19 @@ export const searchTours = createAsyncThunk(
   }
 );
 
+export const getToursByTag = createAsyncThunk(
+  "tour/getToursByTag",
+  // @ts-ignore
+  async (tag, { rejectWithValue }) => {
+    try {
+      const response = await api.getToursByTag(tag);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const tourSlice = createSlice({
   name: 'tour',
   initialState,
@@ -206,6 +221,17 @@ const tourSlice = createSlice({
       state.tours = action.payload;
     },
     [searchTours.rejected.type]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload.message;
+    },
+    [getToursByTag.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [getToursByTag.fulfilled.type]: (state, action) => {
+      state.isLoading = false;
+      state.tagTours = action.payload;
+    },
+    [getToursByTag.rejected.type]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload.message;
     },
