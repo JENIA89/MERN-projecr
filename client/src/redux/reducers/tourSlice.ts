@@ -5,12 +5,14 @@ import { toast } from 'react-toastify';
 
 
 interface TourState {
-  tour: ITour | any,
-  tours: Array<any>,
-  userTours: Array<ITour>,
-  tagTours: Array<any>,
-  error: string,
-  isLoading: boolean,
+  tour: ITour | any;
+  tours: Array<any>;
+  userTours: Array<ITour>;
+  tagTours: Array<any>;
+  currentPage: number;
+  numberOfPages: number;
+  error: string;
+  isLoading: boolean;
 }
 
 const initialState: TourState = {
@@ -18,6 +20,8 @@ const initialState: TourState = {
   tours: [],
   userTours: [],
   tagTours: [],
+  currentPage: 1,
+  numberOfPages: 0,
   error: '',
   isLoading: false,
 }
@@ -53,9 +57,9 @@ export const getTour = createAsyncThunk(
 export const getTours = createAsyncThunk(
   'tour/getTours',
   // @ts-ignore
-  async(_, {rejectWithValue}) => {
+  async(page, {rejectWithValue}) => {
     try {
-      const response = await api.getTours();
+      const response = await api.getTours(page);
       return response.data
     } catch (error: any) {
       return rejectWithValue(error.response.data);
@@ -134,7 +138,11 @@ export const getToursByTag = createAsyncThunk(
 const tourSlice = createSlice({
   name: 'tour',
   initialState,
-  reducers: {},
+  reducers: {
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload;
+    }
+  },
   extraReducers: {
     [createTour.pending.type]: (state) => {
       state.isLoading = true;
@@ -152,7 +160,9 @@ const tourSlice = createSlice({
     },
     [getTours.fulfilled.type]: (state, action) => {
       state.isLoading = false;
-      state.tours = action.payload;
+      state.tours = action.payload.data;
+      state.numberOfPages = action.payload.numberOfPages;
+      state.currentPage = action.payload.currentPage;
     },
     [getTours.rejected.type]: (state, action) => {
       state.isLoading = false;
@@ -236,5 +246,7 @@ const tourSlice = createSlice({
     },
   }
 })
+
+export const { setCurrentPage } = tourSlice.actions;
 
 export default tourSlice.reducer;

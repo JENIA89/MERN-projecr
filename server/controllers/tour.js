@@ -22,7 +22,7 @@ export const getTours = async (req, res) => {
   try {
     // const tours = await TourModel.find();
     // res.status(200).json(tours);
-    const limit = 6;
+    const limit = 3;
     const startIndex = (Number(page) - 1) * limit;
     const total = await TourModel.countDocuments({});
     const tours = await TourModel.find().limit(limit).skip(startIndex);
@@ -30,7 +30,7 @@ export const getTours = async (req, res) => {
       data: tours,
       currentPage: Number(page),
       totalTours: total,
-      numberOfPage: Math.ceil(total / limit)
+      numberOfPages: Math.ceil(total / limit)
     });
   } catch (error) {
     res.status(404).json({ message: "Something went wrong" });

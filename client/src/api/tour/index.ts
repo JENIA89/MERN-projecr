@@ -2,7 +2,7 @@ import { ITour } from '../../models';
 import { api } from './../index';
 
 export const createTour = (model: ITour) => api.post('/tour', model);
-export const getTours = () => api.get('/tour');
+export const getTours = (page: any) => api.get(`/tour?page=${page}`);
 export const getTour = (id: any) => api.get(`/tour/${id}`);
 export const deleteTour = (id: any) => api.delete(`/tour/${id}`);
 export const updateTour = (id: any, data: any) => api.patch(`/tour/${id}`, data);
