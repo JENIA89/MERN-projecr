@@ -15,6 +15,7 @@ import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { setLogout } from 'redux/reducers/authSlice';
 import { searchTours } from 'redux/reducers/tourSlice';
 import { useNavigate } from 'react-router-dom';
+import decode from 'jwt-decode';
 
 const Header: FC = (): JSX.Element => {
   const [isShow, setIsShow] = useState<boolean>(false);
@@ -22,6 +23,14 @@ const Header: FC = (): JSX.Element => {
   const { user } = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const token = user?.token;
+
+  if(token) {
+    const decodedToken: any = decode(token);
+    if(decodedToken.exp * 1000 < new Date().getTime()) {
+      dispatch(setLogout());
+    }
+  }
 
   const handleSubmit = (e: any) => {
     e.preventDefault();

@@ -26,7 +26,7 @@ const TagTours: FC = () => {
 
   return (
     <S.TagsContainer>
-      <S.TagsTitle>Tousr with tags: {tag}</S.TagsTitle>
+      <S.TagsTitle>Tours with tags: {tag}</S.TagsTitle>
       <S.Line />
       {tagTours && tagTours.map(tagTour => (
         <MDBCardGroup key={tagTour._id}>

@@ -199,7 +199,6 @@ const tourSlice = createSlice({
     [updateTour.fulfilled.type]: (state, action) => {
       state.isLoading = false;
       const { id } = action.meta.arg;
-      console.log(id, 'arg id')
       if (id) {
         state.userTours = state.userTours.map((item) =>
           item._id === id ? action.payload : item
