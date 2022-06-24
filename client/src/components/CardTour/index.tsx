@@ -24,14 +24,14 @@ const CardTour: FC<CardTourProps> = ({title, description, imageFile, name, tags,
         />
         <div className="top-left">{name}</div>
         <span className="span text-start tag-card">
-          {tags.map(tag => (
-            <Link to={`/tours/tag/${tag}`}># {tag}</Link>
+          {tags.map((tag, i) => (
+            <Link key={i} to={`/tours/tag/${tag}`}>#{tag} </Link>
           ))}
         </span>
         <MDBCardBody>
           <MDBCardTitle className='test-start'>{title}</MDBCardTitle>
           <MDBCardText className='test-start'>
-            {excerpt(description)}
+            {excerpt(description, 40)}
             <Link to={`/tour/${_id}`}>
               Read More
             </Link>

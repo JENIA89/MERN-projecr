@@ -4,7 +4,8 @@ import { useAppDispatch, useAppSelector } from 'hooks/redux'
 import { useNavigate, useParams } from 'react-router-dom';
 import { getToursByTag } from 'redux/reducers/tourSlice';
 import * as S from './styled';
-import { MDBCard, MDBCardGroup, MDBCardImage, MDBCol, MDBRow } from 'mdb-react-ui-kit';
+import { MDBBtn, MDBCard, MDBCardBody, MDBCardGroup, MDBCardImage, MDBCardText, MDBCardTitle, MDBCol, MDBRow } from 'mdb-react-ui-kit';
+import { excerpt } from 'utils';
 
 const TagTours: FC = () => {
   const { tagTours, isLoading } = useAppSelector(state => ({...state.tour}))
@@ -33,10 +34,31 @@ const TagTours: FC = () => {
             <MDBRow className='g-0'>
               <MDBCol md='4'>
                 <MDBCardImage
+                  width='100%'
                   className='rounded'
                   src={tagTour.imageFile}
                   alt={tagTour.title}
                   />
+              </MDBCol>
+              <MDBCol md='8'>
+                <MDBCardBody>
+                  <MDBCardTitle className='text-start'>
+                    {tagTour.title}
+                  </MDBCardTitle>
+                  <MDBCardText className='text-start'>
+                    {excerpt(tagTour.description, 40)}
+                  </MDBCardText>
+                  <S.TagsButton>
+                    <MDBBtn
+                      size='sm' 
+                      rounded
+                      color='info'
+                      onClick={()=> navigate(`/tour/${tagTour._id}`)}
+                      >
+                      Read More
+                    </MDBBtn>
+                  </S.TagsButton>
+                </MDBCardBody>
               </MDBCol>
             </MDBRow>
           </MDBCard>

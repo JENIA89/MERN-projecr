@@ -54,7 +54,7 @@ const Dashboard = () => {
                   </MDBCardTitle>
                   <MDBCardText className='text-start'>
                     <small className='text-muted'>
-                      {excerpt(userTour.description)}
+                      {excerpt(userTour.description, 40)}
                     </small>
                   </MDBCardText>
                   <S.Button>

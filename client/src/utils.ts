@@ -1,6 +1,6 @@
-export const excerpt = (str: string): string => {
-  if(str.length > 40) {
-    str = str.substring(0, 40) + '...'
+export const excerpt = (str: string, count: number): string => {
+  if(str.length > count) {
+    str = str.substring(0, count) + '...'
   }
   return str
 }
