@@ -33,8 +33,14 @@ const Dashboard = () => {
   
   return (
     <S.DashboardContainer>
-      <S.UserNameTitle>Dashboard: {user?.result?.name}</S.UserNameTitle>
-      <S.Line/>
+      {userTours.length === 0 ? (
+        <h3>No tour available with user: {user?.result?.name}</h3>
+      ) : (
+        <>
+        <S.UserNameTitle>Dashboard: {user?.result?.name}</S.UserNameTitle>
+        <S.Line/>
+        </>
+      )}
       {userTours && userTours.map(userTour => (
         <MDBCardGroup key={userTour._id}>
           <MDBCard style={{width: '600px'}} className='mt-2'>

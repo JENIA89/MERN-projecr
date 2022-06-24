@@ -1,14 +1,16 @@
+import DisqusThread from 'components/DisqusThread';
 import { useAppDispatch, useAppSelector } from 'hooks/redux'
-import { MDBCard, MDBCardBody, MDBCardImage, MDBCardText, MDBContainer, MDBIcon } from 'mdb-react-ui-kit';
+import { MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardText, MDBContainer, MDBIcon } from 'mdb-react-ui-kit';
 import moment from 'moment';
 import React, { FC, useEffect } from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getTour } from 'redux/reducers/tourSlice';
 
 const Tour: FC = () => {
   const dispatch = useAppDispatch();
   const { tour } = useAppSelector(state => ({...state.tour}));
   const { id } = useParams();
+  const navigate = useNavigate()
 
   useEffect(() => {
     // @ts-ignore
@@ -26,6 +28,19 @@ const Tour: FC = () => {
           style={{maxWidth: '100%', height: '600px'}}
         />
         <MDBCardBody>
+          <MDBBtn
+          tag='a'
+          color='none'
+          style={{float: 'left', color: '#000'}}
+          onClick={() => navigate('/')}
+          >
+            <MDBIcon
+              fas
+              size='lg'
+              icon='long-arrow-alt-left'
+              style={{float: 'left'}}
+            />
+          </MDBBtn>
           <h3>{tour?.title}</h3>
           <span>
             <p className="text-start tourName">Create By: {tour?.name}</p>
@@ -52,6 +67,7 @@ const Tour: FC = () => {
           </MDBCardText>
         </MDBCardBody>
       </MDBCard>
+      <DisqusThread id={id} title={tour.title} path={`/tour/${id}`}/>
     </MDBContainer>
     </>
   )
