@@ -10,6 +10,7 @@
 - React-toastify
 - React-google-login
 - React-file-base64
+- Disqus
 
 ## Backend
 - Node.js
