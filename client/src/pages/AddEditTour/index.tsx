@@ -43,7 +43,7 @@ const AddEditTour:FC = () => {
     if(!tags.length) {
       setTagErrorMsg('Please provide some tags')
     }
-    if(title && description && tags.length) {
+    if(title && description && tags) {
       const updateTourData = {...tourData, name: user?.result?.name};
       if(!id) {
         // @ts-ignore       

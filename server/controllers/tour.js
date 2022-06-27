@@ -80,6 +80,7 @@ export const deleteTour = async (req, res) => {
 export const updateTour = async (req, res) => {
   const { id } = req.params;
   const { title, description, creator, imageFile, tags } = req.body;
+
   try {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(404).json({ message: `No tour exist with id: ${id}` });
@@ -96,7 +97,7 @@ export const updateTour = async (req, res) => {
     await TourModel.findByIdAndUpdate(id, updatedTour, { new: true });
     res.json(updatedTour);
   } catch (error) {
-    res.status(404).json({ message: "Something went wrong" });
+    res.status(404).json({error});
   }
 };
 
