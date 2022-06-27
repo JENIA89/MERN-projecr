@@ -14,9 +14,7 @@ const tourSchema = mongoose.Schema({
   likes: {
     type: [String],
     default: [],
-  }
+  },
 });
-
-
 
 export default mongoose.model("Tour", tourSchema);

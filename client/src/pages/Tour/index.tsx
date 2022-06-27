@@ -47,7 +47,7 @@ const Tour: FC = () => {
           </span>
           <div style={{float: 'left'}}> 
             <span className="text-start">
-              {tour.tags && tour.tags.map((tag: string)=>`#${tag}`)}
+              {tour.tags && tour.tags.map((tag: string)=>` #${tag}`)}
             </span>
           </div>
           <br/>

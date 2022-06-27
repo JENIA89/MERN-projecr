@@ -106,18 +106,18 @@ export const getToursBySearch = async (req, res) => {
   try {
     const title = new RegExp(searchQuery, 'i');
     const tours = await TourModel.find({title});
-    res.json(tours)
+    res.json(tours);
   } catch (error) {
     res.status(404).json({ message: "Something went wrong" });
   }
 };
 
 export const getToursByTag = async (req, res) => {
-  const { tag} = req.params;
+  const { tag } = req.params;
 
   try {
-    const tours = await TourModel.find({tag: {$in: tag}})
-    res.json(tours)
+    const tours = await TourModel.find({tags: {$in: tag}});
+    res.json(tours);
   } catch (error) {
     res.status(404).json({ message: "Something went wrong" });
   }
@@ -139,9 +139,9 @@ export const likeTour = async (req, res) => {
     const index = tour.likes.findIndex(id => id === String(req.userId));
   
     if(index === -1) {
-      tour.likes.push(req.userId)
+      tour.likes.push(req.userId);
     } else {
-      tour.likes = tour.likes.filter(id => id !== String(req.userId))
+      tour.likes = tour.likes.filter(id => id !== String(req.userId));
     }
   
     const updatedTour = await TourModel.findByIdAndUpdate(id, tour, { new: true });

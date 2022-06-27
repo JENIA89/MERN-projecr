@@ -69,7 +69,7 @@ const CardTour: FC<CardTourProps> = ({title, description, imageFile, name, tags,
         <div className="top-left">{name}</div>
         <span className="span text-start tag-card">
           {tags.map((tag, i) => (
-            <Link key={i} to={`/tours/tag/${tag}`}>#{tag} </Link>
+            <Link key={i} to={`/tours/tag/${tag}`}> #{tag}</Link>
           ))}
           <MDBBtn
             style={{float: 'right'}}

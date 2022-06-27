@@ -44,7 +44,7 @@ export const createTour = createAsyncThunk(
 export const getTour = createAsyncThunk(
   'tour/getTour',
   // @ts-ignore
-  async(id, {rejectWithValue}) => {
+  async(id: string, {rejectWithValue}) => {
     try {
       const response = await api.getTour(id);
       return response.data
@@ -57,7 +57,7 @@ export const getTour = createAsyncThunk(
 export const getTours = createAsyncThunk(
   'tour/getTours',
   // @ts-ignore
-  async(page, {rejectWithValue}) => {
+  async(page: string, {rejectWithValue}) => {
     try {
       const response = await api.getTours(page);
       return response.data
@@ -70,7 +70,7 @@ export const getTours = createAsyncThunk(
 export const getToursByUser = createAsyncThunk(
   'tour/getToursByUser',
   // @ts-ignore
-  async(userId, {rejectWithValue}) => {
+  async(userId: string, {rejectWithValue}) => {
     try {
       const response = await api.getToursByUser(userId);
       return response.data
@@ -83,7 +83,7 @@ export const getToursByUser = createAsyncThunk(
 export const deleteTour = createAsyncThunk(
   'tour/deleteTour',
   // @ts-ignore
-  async(userId, {rejectWithValue}) => {
+  async(userId: string, {rejectWithValue}) => {
     try {
       const response = await api.deleteTour(userId);
       toast.success('Tour Deleted Successfuly');
@@ -112,7 +112,7 @@ export const updateTour = createAsyncThunk(
 export const searchTours = createAsyncThunk(
   "tour/searchTours",
   // @ts-ignore
-  async (querySearch, { rejectWithValue }) => {
+  async (querySearch: string, { rejectWithValue }) => {
     try {
       const response = await api.getToursBySearch(querySearch);
       return response.data;
@@ -125,7 +125,7 @@ export const searchTours = createAsyncThunk(
 export const getToursByTag = createAsyncThunk(
   "tour/getToursByTag",
   // @ts-ignore
-  async (tag, { rejectWithValue }) => {
+  async (tag: string, { rejectWithValue }) => {
     try {
       const response = await api.getToursByTag(tag);
       return response.data;
@@ -222,6 +222,10 @@ const tourSlice = createSlice({
     [updateTour.fulfilled.type]: (state, action) => {
       state.isLoading = false;
       const { id } = action.meta.arg;
+      console.log(action.meta.arg, 'action.meta.arg');
+      console.log(action.meta, 'action.meta');
+      console.log(id, 'id');
+      
       if (id) {
         state.userTours = state.userTours.map((item) =>
           item._id === id ? action.payload : item

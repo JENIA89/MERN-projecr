@@ -1,12 +1,12 @@
 import React, { FC, useEffect } from 'react';
+import { useLocation } from 'react-router-dom'
+import { MDBCol, MDBContainer, MDBRow, MDBTypography } from 'mdb-react-ui-kit';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import * as S from './styled';
 import { getTours, setCurrentPage } from '../../redux/reducers/tourSlice';
-import { MDBCol, MDBContainer, MDBRow, MDBTypography } from 'mdb-react-ui-kit';
 import CardTour from '../../components/CardTour';
 import Spinner from '../../components/Spinner';
-import Pagination from 'components/Pagination';
-import { useLocation } from 'react-router-dom';
+import Pagination from 'components/Pagination';;
 
 function useQuery() {
   return new URLSearchParams(useLocation().search)
