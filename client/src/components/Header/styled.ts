@@ -3,14 +3,16 @@ import styled from 'styled-components';
 export const HeaderLink = styled.p`
   color: #606080;
   font-weight: 600;
-  margin-top: 7px;
+  margin: 0 10px;
   font-size: 17px;
 `;
 
 export const UserName = styled.h5`
-  margin: 15px 30px 0 0;
+  margin-right: 20px;
 `;
 
 export const SearchIcon = styled.div`
-  margin: 5px 0 0 5px;
+  display: flex;
+  align-items: center;
+  padding-left: 5px;
 `;

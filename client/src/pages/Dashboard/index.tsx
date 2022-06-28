@@ -1,17 +1,28 @@
-import React, { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '../../hooks/redux'
-import { deleteTour, getToursByUser } from '../../redux/reducers/tourSlice';
-import * as S from './styled';
-import { MDBBtn, MDBCard, MDBCardBody, MDBCardGroup, MDBCardImage, MDBCardText, MDBCardTitle, MDBCol, MDBIcon, MDBRow } from 'mdb-react-ui-kit';
-import { excerpt } from '../../utils';
+import React, { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { deleteTour, getToursByUser } from '../../redux/reducers/tourSlice';
+import {
+  MDBBtn,
+  MDBCard,
+  MDBCardBody,
+  MDBCardGroup,
+  MDBCardImage,
+  MDBCardText,
+  MDBCardTitle,
+  MDBCol,
+  MDBIcon,
+  MDBRow
+} from 'mdb-react-ui-kit';
+import { excerpt } from '../../utils/strUtils';
 import Spinner from '../../components/Spinner';
+import * as S from './styled';
 
-const Dashboard = () => {
+const Dashboard: FC = (): JSX.Element => {
   const { user } = useAppSelector(state => ({...state.auth}));
   const { userTours, isLoading } = useAppSelector(state => ({...state.tour}));
   const dispatch = useAppDispatch();
-  const userId = user?.result?._id;
+  const userId: string | undefined = user?.result?._id;
   
   useEffect(() => {
     if(userId) {
@@ -34,7 +45,7 @@ const Dashboard = () => {
   return (
     <S.DashboardContainer>
       {userTours.length === 0 ? (
-        <h3>No tour available with user: {user?.result?.name}</h3>
+        <S.NoAvailable>No tour available with user: {user?.result?.name}</S.NoAvailable>
       ) : (
         <>
         <S.UserNameTitle>Dashboard: {user?.result?.name}</S.UserNameTitle>

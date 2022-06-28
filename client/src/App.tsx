@@ -1,11 +1,11 @@
 import React, { FC, useEffect } from 'react';
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
-import './App.css';
 import Header from 'components/Header';
 import AppRouter from './router';
 import { useAppDispatch } from 'hooks/redux';
 import { setUser } from 'redux/reducers/authSlice';
+import './App.css';
 
 
 const App: FC = (): JSX.Element => {

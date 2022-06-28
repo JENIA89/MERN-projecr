@@ -1,13 +1,23 @@
 import React, { FC, useEffect } from 'react'
-import Spinner from 'components/Spinner';
 import { useAppDispatch, useAppSelector } from 'hooks/redux'
 import { useNavigate, useParams } from 'react-router-dom';
 import { getToursByTag } from 'redux/reducers/tourSlice';
+import {
+  MDBBtn,
+  MDBCard,
+  MDBCardBody,
+  MDBCardGroup,
+  MDBCardImage,
+  MDBCardText,
+  MDBCardTitle,
+  MDBCol,
+  MDBRow
+} from 'mdb-react-ui-kit';
+import { excerpt } from 'utils/strUtils';
+import Spinner from 'components/Spinner';
 import * as S from './styled';
-import { MDBBtn, MDBCard, MDBCardBody, MDBCardGroup, MDBCardImage, MDBCardText, MDBCardTitle, MDBCol, MDBRow } from 'mdb-react-ui-kit';
-import { excerpt } from 'utils';
 
-const TagTours: FC = () => {
+const TagTours: FC = (): JSX.Element => {
   const { tagTours, isLoading } = useAppSelector(state => ({...state.tour}))
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

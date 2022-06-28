@@ -18,7 +18,7 @@ function renderDisqus() {
 class DisqusThread extends React.Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string,
     path: PropTypes.string.isRequired,
   };
 

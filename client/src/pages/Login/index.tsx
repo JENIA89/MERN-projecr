@@ -1,7 +1,6 @@
-import React, { useEffect, FC, useState } from 'react';
+import React, { useEffect, FC, useState, SyntheticEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import * as S from './styled';
 import {
   MDBBtn,
   MDBCard,
@@ -17,6 +16,7 @@ import { login, googleSignIn } from '../../redux/reducers/authSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { toast } from 'react-toastify';
 import { GoogleLogin } from 'react-google-login';
+import * as S from './styled';
 
 const initialState: ILoginModel = {
   email: '',
@@ -24,7 +24,7 @@ const initialState: ILoginModel = {
 }
 
 const Login: FC = (): JSX.Element => {
-  const [ formValue, setFormValue ] = useState(initialState);
+  const [ formValue, setFormValue ] = useState<ILoginModel>(initialState);
   const { isLoading, error } = useAppSelector((state) => ({...state.auth}));
   const { email, password } = formValue;
   const dispatch = useAppDispatch();
@@ -34,7 +34,7 @@ const Login: FC = (): JSX.Element => {
     error && toast.error(error);
   }, [error])
   
-  const handleSubmit = (e: React.SyntheticEvent): void  => {
+  const handleSubmit = (e: SyntheticEvent): void  => {
     e.preventDefault();
     if(email && password) {
       // @ts-ignore
@@ -47,9 +47,7 @@ const Login: FC = (): JSX.Element => {
     setFormValue({...formValue, [name]: value});
   }
 
-  const googleSuccess = (resp: any) => {
-    console.log(resp);
-    
+  const googleSuccess = (resp: any): void => {
     const email = resp?.profileObj?.email;
     const name = resp?.profileObj?.name;
     const token = resp?.tokenId;
@@ -59,7 +57,7 @@ const Login: FC = (): JSX.Element => {
     dispatch(googleSignIn({result, navigate}));
   }
 
-  const googleFailure = (error: any) => {
+  const googleFailure = (error: any): void => {
     toast.error(error)
   }
 
@@ -67,7 +65,7 @@ const Login: FC = (): JSX.Element => {
     <S.LoginContainer>
       <MDBCard alignment='left'>
         <MDBIcon fas  icon='user-circle' className='fa-2x'/>
-        <h5>Sign In</h5>
+        <S.LoginTitle>Sign In</S.LoginTitle>
         <MDBCardBody>
           <MDBValidation onSubmit={handleSubmit} noValidate className='row g-3'>
             <div className="col-md-12">

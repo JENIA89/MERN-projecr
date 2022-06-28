@@ -1,6 +1,7 @@
+import React, { FC } from 'react'
 import { AnyAction, Dispatch } from '@reduxjs/toolkit';
 import { MDBBtn, MDBPagination, MDBPaginationItem } from 'mdb-react-ui-kit';
-import React, { FC } from 'react'
+import * as S from './styled'
 
 interface PaginationProps {
   setCurrentPage: () => void;
@@ -9,9 +10,9 @@ interface PaginationProps {
   numberOfPages: number;
 }
 
-const Pagination: FC<PaginationProps> = ({setCurrentPage, currentPage, numberOfPages, dispatch}) => {
+const Pagination: FC<PaginationProps> = ({setCurrentPage, currentPage, numberOfPages, dispatch}): JSX.Element => {
 
-  const renderPagination = () =>{
+  const renderPagination = (): JSX.Element | null =>{
     if(currentPage === numberOfPages && currentPage === 1) return null;
     if(currentPage === 1) {
       return (
@@ -84,7 +85,7 @@ const Pagination: FC<PaginationProps> = ({setCurrentPage, currentPage, numberOfP
     )}
   }
   return (
-    <div className='mt-4'>{renderPagination()}</div>
+    <S.PaginationContainer>{renderPagination()}</S.PaginationContainer>
   )
 }
 

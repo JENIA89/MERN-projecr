@@ -18,4 +18,7 @@ export const Line = styled.hr`
 export const Button = styled.div`
   margin: -60px 0 0 5px;
   float: right;
-`
+`;
+
+export const NoAvailable = styled.h3`
+`;

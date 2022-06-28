@@ -1,4 +1,5 @@
-import React, { FC, useState } from 'react';
+import React, { FC, SyntheticEvent, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   MDBCollapse,
   MDBContainer,
@@ -6,15 +7,13 @@ import {
   MDBNavbar,
   MDBNavbarBrand,
   MDBNavbarItem,
-  MDBNavbarLink,
   MDBNavbarNav,
   MDBNavbarToggler,
 } from 'mdb-react-ui-kit';
-import * as S from './styled';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { setLogout } from 'redux/reducers/authSlice';
 import { searchTours } from 'redux/reducers/tourSlice';
-import { useNavigate } from 'react-router-dom';
+import * as S from './styled';
 import decode from 'jwt-decode';
 
 const Header: FC = (): JSX.Element => {
@@ -32,7 +31,7 @@ const Header: FC = (): JSX.Element => {
     }
   }
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: SyntheticEvent): void => {
     e.preventDefault();
     if(search) {
       // @ts-ignore 
@@ -43,7 +42,7 @@ const Header: FC = (): JSX.Element => {
     }
     setSearch('')
   }
-  const handleLogout = () => {
+  const handleLogout = (): void => {
     dispatch(setLogout())
   }
   
@@ -66,35 +65,37 @@ const Header: FC = (): JSX.Element => {
           <MDBNavbarNav right fullWidth={false} className='mb-2  mb-lg-0'>
             {user && <S.UserName>Logget as: {user?.result?.name}</S.UserName>}
             <MDBNavbarItem>
-              <MDBNavbarLink href='/'>
+              <Link to='/'>
                 <S.HeaderLink>Home</S.HeaderLink>
-              </MDBNavbarLink>
+              </Link>
             </MDBNavbarItem>
             {user
             ? 
               <>
               <MDBNavbarItem>
-              <MDBNavbarLink href='/addtour'>
-                <S.HeaderLink>Add Tour</S.HeaderLink>
-              </MDBNavbarLink>
-            </MDBNavbarItem>
-            <MDBNavbarItem>
-              <MDBNavbarLink href='/dashboard'>
-                <S.HeaderLink>Dashboard</S.HeaderLink>
-              </MDBNavbarLink>
-            </MDBNavbarItem>
-            <MDBNavbarItem>
-              <MDBNavbarLink href='/login'>
-                <S.HeaderLink onClick={handleLogout}>Logout</S.HeaderLink>
-              </MDBNavbarLink>
-            </MDBNavbarItem>
+                <Link to='/addtour'>
+                  <S.HeaderLink>Add Tour</S.HeaderLink>
+                </Link>
+              </MDBNavbarItem>
+              <MDBNavbarItem>
+                <Link to='/dashboard'>
+                  <S.HeaderLink>Dashboard</S.HeaderLink>
+                </Link>
+              </MDBNavbarItem>
+              <MDBNavbarItem>
+                <Link to='/login'>
+                  <S.HeaderLink onClick={handleLogout}>Logout</S.HeaderLink>
+                </Link> 
+              </MDBNavbarItem>
               </>
-            : <>
-            <MDBNavbarItem>
-              <MDBNavbarLink href='/login'>
-                <S.HeaderLink>Login</S.HeaderLink>
-              </MDBNavbarLink>
-            </MDBNavbarItem></>
+            : 
+              <>
+              <MDBNavbarItem>
+                <Link to='/login'>
+                  <S.HeaderLink>Login</S.HeaderLink>
+                </Link>
+              </MDBNavbarItem>
+              </>
             }
           </MDBNavbarNav>
           <form className='d-flex input-group w-auto' onSubmit={handleSubmit}>

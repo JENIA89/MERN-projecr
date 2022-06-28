@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ChipInput from 'material-ui-chip-input';
 import { MDBBtn, MDBCard, MDBCardBody, MDBValidation } from 'mdb-react-ui-kit';
@@ -17,15 +17,15 @@ const initialState: ITour = {
   tags: [],
   imageFile: ''
 }
-const AddEditTour:FC = () => {
-  const [ tourData, setTourData ] = useState(initialState);
+const AddEditTour:FC = (): JSX.Element => {
+  const [ tourData, setTourData ] = useState<ITour>(initialState);
   const [ tagErrorMsg, setTagErrorMsg ] = useState<string>('');
   const { title, description, tags } = tourData;
   const { error, userTours } = useAppSelector((state) => ({...state.tour}));
   const { user } = useAppSelector((state) => ({...state.auth}));
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { id } = useParams<string>();
 
   useEffect(() => {
     if(id) {
@@ -38,7 +38,7 @@ const AddEditTour:FC = () => {
     error && toast.error(error);
   }, [error])
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: SyntheticEvent): void => {
     e.preventDefault();
     if(!tags.length) {
       setTagErrorMsg('Please provide some tags')
@@ -55,16 +55,16 @@ const AddEditTour:FC = () => {
       handleClear();
     }
   }
-  const onInputChange = (e: any) => {
-    const { name, value } = e.target;
+  const onInputChange = (e: any): void => {
+    const { name, value } = e.target
     setTourData({...tourData, [name]: value})
   }
 
-  const handleAddTag = (tag: any) => {
+  const handleAddTag = (tag: string): void => {
     setTagErrorMsg('');
     setTourData({...tourData, tags: [...tourData.tags, tag]})
   }
-  const handleDeleteTag = (delTag: any) => {
+  const handleDeleteTag = (delTag: string): void => {
     setTourData({...tourData, tags: tourData.tags.filter(tag => tag !== delTag)})
   }
   const handleClear = () => {

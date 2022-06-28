@@ -26,7 +26,7 @@ const initialState: IRegisterModel = {
 }
 
 const Register: FC = (): JSX.Element => {
-  const [ formValue, setFormValue ] = useState(initialState);
+  const [ formValue, setFormValue ] = useState<IRegisterModel>(initialState);
   const { isLoading, error } = useAppSelector((state) => ({...state.auth}));
   const { email, password, confirmPassword, firstName, lastName } = formValue;
   const dispatch = useAppDispatch();
@@ -58,7 +58,7 @@ const Register: FC = (): JSX.Element => {
     <S.RegisterContainer>
       <MDBCard alignment='left'>
         <MDBIcon fas  icon='user-circle' className='fa-2x'/>
-        <h5>Sign Up</h5>
+        <S.RegisterTitle>Sign Up</S.RegisterTitle>
         <MDBCardBody>
           <MDBValidation onSubmit={handleSubmit} noValidate className='row g-3'>
             <div className="col-md-6">

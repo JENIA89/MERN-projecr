@@ -1,9 +1,20 @@
-import React, { FC } from 'react'
-import { MDBBtn, MDBCard, MDBCardBody, MDBCardGroup, MDBCardImage, MDBCardText, MDBCardTitle, MDBIcon, MDBTooltip } from 'mdb-react-ui-kit';
-import { excerpt } from 'utils';
+import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import {
+  MDBBtn,
+  MDBCard,
+  MDBCardBody,
+  MDBCardGroup,
+  MDBCardImage,
+  MDBCardText,
+  MDBCardTitle,
+  MDBIcon,
+  MDBTooltip
+} from 'mdb-react-ui-kit';
+import { excerpt } from 'utils/strUtils';
 import { likeTour } from 'redux/reducers/tourSlice';
+import * as S from './styled';
 
 interface CardTourProps {
   title: string;
@@ -16,11 +27,9 @@ interface CardTourProps {
 }
 
 const CardTour: FC<CardTourProps> = ({title, description, imageFile, name, tags, _id, likes}): JSX.Element => {
-
   const { user } = useAppSelector(state => ({...state.auth}));
   const dispatch = useAppDispatch();
   const userId = user?.result._id;
-
 
   const Likes = () => {
     if(likes.length > 0) {
@@ -53,7 +62,7 @@ const CardTour: FC<CardTourProps> = ({title, description, imageFile, name, tags,
       </>
     )
   }
-  const handleLike = () => {
+  const handleLike = (): void => {
     // @ts-ignore
     dispatch(likeTour({_id}))
   }
@@ -66,7 +75,7 @@ const CardTour: FC<CardTourProps> = ({title, description, imageFile, name, tags,
           position='top'
           style={{maxWidth: '100%', height: '180px'}}
         />
-        <div className="top-left">{name}</div>
+        <S.CardName>{name}</S.CardName>
         <span className="span text-start tag-card">
           {tags.map((tag, i) => (
             <Link key={i} to={`/tours/tag/${tag}`}> #{tag}</Link>

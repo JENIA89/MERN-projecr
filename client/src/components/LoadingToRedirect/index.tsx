@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from './styled';
 
-const LoadingToRedirect: FC = () => {
+const LoadingToRedirect: FC = (): JSX.Element => {
   const [count, setCount] = useState<number>(3);
   const navigate = useNavigate();
 
